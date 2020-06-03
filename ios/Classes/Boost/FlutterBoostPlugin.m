@@ -198,6 +198,7 @@
 }
 
 + (void)onNativeResult:(NSString *)uniqueId result:(NSDictionary *)resultData exts:(NSDictionary *)exts completion:(void (^)(BOOL))completion{
+    [FlutterBoostPlugin.sharedInstance.application didInitPageContainer:@"" params:resultData uniqueId:uniqueId];
     id<FLBFlutterApplicationInterface> app = [[FlutterBoostPlugin sharedInstance] application];
     [app close:uniqueId result:resultData exts:exts completion:completion];
 }
