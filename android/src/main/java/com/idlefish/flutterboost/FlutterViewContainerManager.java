@@ -143,15 +143,15 @@ public class FlutterViewContainerManager implements IContainerManager {
         if(v != null) {
             requestCode = Integer.valueOf(String.valueOf(v));
         }
-        String uniqueId = (String) urlParams.get("__container_uniqueId_key__");
-//        IContainerRecord currentTopRecord = getCurrentTopRecord();
-//        if(onResult != null&&currentTopRecord!=null) {
-//            mOnResults.put(currentTopRecord.uniqueId(),onResult);
-//        }
-        if(onResult != null) {
+        IContainerRecord currentTopRecord = getCurrentTopRecord();
+        String uniqueId = ContainerRecord.genUniqueId(url);
+        if(onResult != null&&currentTopRecord!=null) {
+            uniqueId = currentTopRecord.uniqueId();
+            mOnResults.put(uniqueId,onResult);
+        }else if(onResult != null) {
             mOnResults.put(uniqueId,onResult);
         }
-
+        urlParams.put(IContainerRecord.UNIQ_KEY,uniqueId);
         FlutterBoost.instance().platform().openContainer(context,url,urlParams,requestCode,exts);
     }
 

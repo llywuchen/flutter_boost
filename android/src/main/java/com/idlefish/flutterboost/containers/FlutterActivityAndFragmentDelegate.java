@@ -278,10 +278,13 @@ public class FlutterActivityAndFragmentDelegate implements IFlutterViewContainer
         mSyncer.onActivityResult(requestCode, resultCode, data);
         Map<String, Object> result = null;
         if (data != null) {
-            Serializable rlt = data.getSerializableExtra(RESULT_KEY);
-            if (rlt instanceof Map) {
-                result = (Map<String, Object>) rlt;
-            }
+          Serializable rlt = data.getSerializableExtra(RESULT_KEY);
+          if (rlt instanceof Map) {
+              result = (Map<String, Object>) rlt;
+          }else if (rlt instanceof String){
+              result = new HashMap<String, Object>();
+              result.put("result",rlt);
+          }
         }
 
         mSyncer.onContainerResult(requestCode, resultCode, result);
